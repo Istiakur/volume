@@ -12,30 +12,46 @@
     #volumeControl {
       width: 300px;
     }
+    #playButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
   <h1>Background Music</h1>
-  <!-- The audio element plays your music file on loop -->
-  <audio id="backgroundMusic" src="audio.mp3" autoplay loop></audio>
+  <!-- Audio element without autoplay -->
+  <audio id="backgroundMusic" src="audio.mp3" loop></audio>
+  
+  <!-- Play button to start the music -->
+  <button id="playButton">Play Music</button>
   
   <div>
     <label for="volumeControl">Volume: </label>
-    <!-- The input range will serve as your volume controller -->
     <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
   </div>
 
   <script>
-    // Get the audio element and the volume controller
     const audio = document.getElementById('backgroundMusic');
+    const playButton = document.getElementById('playButton');
     const volumeControl = document.getElementById('volumeControl');
 
-    // Set the initial volume of the audio element
+    // Set initial volume
     audio.volume = volumeControl.value;
 
-    // Update the audio volume whenever the slider value changes
+    // Update volume when the slider changes
     volumeControl.addEventListener('input', function() {
       audio.volume = this.value;
+    });
+
+    // Start playing the music when the user clicks the play button
+    playButton.addEventListener('click', function() {
+      audio.play().catch(error => {
+        console.error('Error playing the audio:', error);
+      });
+      // Optionally, hide the button after playing
+      playButton.style.display = 'none';
     });
   </script>
 </body>
